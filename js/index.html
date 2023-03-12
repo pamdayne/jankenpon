@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <style>
+      :root {
+        --border-radius-sm: 1rem;
+        --fs-primary-font: sans-serif;
+      }
+
+      html {
+        font-size: 10px;
+        font-family: var(--fs-primary-font);
+      }
+
+      p {
+        font-size: 1.8rem;
+      }
+
+      section {
+        text-align: center;
+      }
+
+      section.game-area,
+      section.game-results {
+        display: flex;
+        place-content: center;
+        flex-wrap: wrap;
+      }
+
+      fieldset {
+        border-radius: var(--border-radius-sm);
+        padding: 2rem;
+      }
+
+      .player-field {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .player-field button {
+        padding: 1rem;
+        border-radius: var(--border-radius-sm);
+        border-width: 0;
+      }
+
+    </style>
+    <title>JanKenPon</title>
+  </head>
+  <body>
+    <section class="title">
+      <h1>JanKenPon</h1>
+    </section>
+    <section class="game-area">
+      <fieldset>
+        <legend>You</legend>
+        <div class="player-field js-player-field">
+          <button type="radio" name="player-choice" id="rock" value="rock">Rock</button>
+          <button type="radio" name="player-choice" id="paper" value="paper">Paper</button>
+          <button type="radio" name="player-choice" id="scissors" value="scissors">Scissors</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Bot</legend>
+        <div class="bot-field js-bot-field"></div>
+      </fieldset>
+    </section>
+    <section class="game-results js-game-results">
+    </section>
+    <script>
+      const radios = document.querySelectorAll('button[name="player-choice"]');
+      let playersChoice = '';
+      let botsChoice = ''
+
+      radios.forEach(radio => {
+        document.getElementById(radio.id)
+          .addEventListener('click', function () {
+            botsChoice = randomBotChoice().toLowerCase();
+            setMessage('.js-bot-field', botsChoice);
+            setMessage('.js-game-results', thisBeatsThat(radio.value, botsChoice) + ' wins!');
+          });
+      });
+
+      const setMessage = (classname, val) => {
+        const elem = document.querySelector(classname);
+
+        if (elem.hasChildNodes()) {
+          elem.removeChild(elem.childNodes[0]);
+        }
+
+        const node = document.createElement('p');
+        const textNode = document.createTextNode(val);
+        node.appendChild(textNode);
+        elem.appendChild(node);
+      }
+
+      const randomBotChoice = () => {
+        const handShapes = ['Rock', 'Paper', 'Scissors'];
+        const chosenShape = handShapes[Math.floor(Math.random() * handShapes.length)];
+        return chosenShape;
+      }
+
+      const thisBeatsThat = (playerChoice, botChoice) => {
+        console.log(`Player: ${playerChoice} vs Bot: ${botChoice}`)
+        const players = ['Player', 'Bot'];
+
+        if (playerChoice === botChoice) {
+          console.log(`draw`);
+          return 'No one ';
+        } else if (playerChoice === 'paper' && botChoice === 'rock') {
+          console.log(`${playerChoice} wins`);
+          return players[0];
+        } else if (playerChoice === 'rock' && botChoice === 'scissors') {
+          console.log(`${playerChoice} wins`);
+          return players[0];
+        } else if (playerChoice === 'scissors' && botChoice === 'paper') {
+          console.log(`${playerChoice} wins`);
+          return players[0];
+        } else {
+          console.log(`${botChoice} wins`);
+          return players[1];
+        }
+      }
+    </script>
+  </body>
+</html>

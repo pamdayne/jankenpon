@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <title>JanKenPon</title>
+  </head>
+  <body>
+    <h1>JanKenPon</h1>
+    <fieldset>
+      <legend>You</legend>
+      <div id="playerField">
+        <input type="radio" name="player-choice" id="rock" value="rock">
+        <label for="rock">Rock</label>
+        <input type="radio" name="player-choice" id="paper" value="paper">
+        <label for="paper">Paper</label>
+        <input type="radio" name="player-choice" id="scissors" value="scissors">
+        <label for="scissors">Scissors</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Bot</legend>
+      <div class="bot-choice"></div>
+    </fieldset>
+
+    <div class="results">
+      <p></p>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        // On click radio
+        $("input[type='radio']").click(function () {
+          // reset bot @ every click
+          let botShape = '';
+          let winner = '';
+          $('.bot-choice', '.results p').unbind('click');
+
+
+          // get player's choice
+          let playerChoice = $("input[name='player-choice']:checked").val();
+
+          // bot randomly selects choice
+          botShape = getBotChoice();
+
+          // set bot text
+          $('.bot-choice').text(botShape);
+
+          // fight!
+          winner = playerChoice ? thisBeatsThat(playerChoice, botShape) : '';
+
+          // set result text
+          $('.results p').text(winner + ' wins!')
+        });
+      });
+
+      const getBotChoice = () => {
+        const handShapes = ['Rock', 'Paper', 'Scissors'];
+        const chosenShape = handShapes[Math.floor(Math.random() * handShapes.length)];
+        return chosenShape;
+      }
+
+      const thisBeatsThat = (playerChoice, botChoice) => {
+        console.log(`Player: ${playerChoice} vs Bot: ${botChoice}`)
+        const players = ['Player', 'Bot'];
+
+        if (playerChoice === botChoice) {
+          console.log(`draw`);
+          return 'No one ';
+        } else if (playerChoice === 'paper' && botChoice === 'rock') {
+          console.log(`${playerChoice} wins`);
+          return players[0];
+        } else if (playerChoice === 'rock' && botChoice === 'scissors') {
+          console.log(`${playerChoice} wins`);
+          return players[0];
+        } else if (playerChoice === 'scissors' && botChoice === 'paper') {
+          console.log(`${playerChoice} wins`);
+          return players[0];
+        } else {
+          console.log(`${botChoice} wins`);
+          return players[1];
+        }
+      }
+    </script>
+  </body>
+</html>
