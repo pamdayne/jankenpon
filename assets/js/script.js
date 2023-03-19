@@ -19,7 +19,7 @@ const setMessage = (classname, val) => {
     elem.removeChild(elem.childNodes[0]);
   }
 
-  const node = document.createElement('p');
+  const node = document.createElement('div');
   const textNode = document.createTextNode(val);
   node.appendChild(textNode);
   elem.appendChild(node);

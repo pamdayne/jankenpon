@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="asset/styles/reset.css">
+    <link rel="stylesheet" href="asset/styles/style.css">
     <title>JanKenPon</title>
   </head>
   <body>
@@ -13,21 +13,15 @@
       <h1>JanKenPon</h1>
     </section>
     <section class="game-area">
-      <fieldset>
-        <legend>You</legend>
-        <div class="player-field js-player-field">
-          <button type="radio" name="player-choice" id="rock" value="rock">Rock</button>
-          <button type="radio" name="player-choice" id="paper" value="paper">Paper</button>
-          <button type="radio" name="player-choice" id="scissors" value="scissors">Scissors</button>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Bot</legend>
-        <div class="bot-field js-bot-field"></div>
-      </fieldset>
+      <div class="bot-field js-bot-field"></div>
+      <div class="player-field js-player-field">
+        <button type="radio" name="player-choice" id="rock" value="rock">Rock</button>
+        <button type="radio" name="player-choice" id="paper" value="paper">Paper</button>
+        <button type="radio" name="player-choice" id="scissors" value="scissors">Scissors</button>
+      </div>
     </section>
     <section class="game-results js-game-results">
     </section>
-    <script defer src="js/script.js"></script>
+    <script defer src="assets/js/script.js"></script>
   </body>
 </html>
