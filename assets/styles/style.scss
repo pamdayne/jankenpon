@@ -1,65 +1,77 @@
 :root {
   --fs-base: 10px;
   --border-radius-sm: 1rem;
-  --fs-primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --fs-color-primary: #9dd2d8;
-  --fs-color-secondary: #fadce4;
-  --fs-color-accent: #ffb5cc;
-  --btn-width: 8rem;
-  --btn-height: 8rem;
+  --ff-title: 'Titan One', cursive;
+  --ff-primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --color-primary: #fcd1d1;
+  --color-primary-light: #ece2e1;
+  --color-secondary: #aee1e1;
+  --color-secondary-light: #d3e0dc;
+  --color-accent: #97cfcf;
+  --color-white: #ffffff;
+  --color-grey: #dddddd;
+  --color-grey-light: #ebebeb;
   --game-area-w: 10rem;
   --game-area-h: 10rem;
 }
 
 html {
   font-size: var(--fs-base);
-  font-family: var(--fs-primary-font);
+  font-family: var(--ff-primary-font);
 }
 
 body {
-  background-color: var(--fs-color-accent);
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1 {
-  font-size: 1.8rem;
-}
-
-section {
-  text-align: center;
-
-  &.game-area,
-  &.game-results {
-    display: flex;
-    place-content: center;
-    flex-wrap: wrap;
-  }
+  font-size: 3rem;
+  font-family: var(--ff-title);
 }
 
 .game-area {
-  flex-direction: column;
-  margin: 0 auto;
-  max-width: 30rem;
-}
-
-.bot-field {
-  height: var(--game-area-h);
-  font-size: 1.8rem;
   display: flex;
-  place-content: center;
   flex-direction: column;
+  margin-top: 3rem;
+  gap: 3rem;
 }
 
 .player-field {
   display: flex;
-  gap: 1rem;
-  place-content: center;
+  gap: 2rem;
 
   button {
+    // background-color: transparent;
     font-size: 1.8rem;
     padding: 1rem;
-    height: var(--btn-height);
-    width: var(--btn-width);
-    border-radius: var(--border-radius-sm);
     border-width: 0;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--color-white);
+
+    &:hover {
+      background-color: var(--color-grey);
+    }
   }
+}
+
+.bot-field {
+  font-size: 1.8rem;
+  display: flex;
+  place-items: center;
+  flex-direction: column;
+
+  img {
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 2rem;
+  }
+}
+
+
+.game-results {
+  font-size: 2rem;
+  text-align: center;
 }
