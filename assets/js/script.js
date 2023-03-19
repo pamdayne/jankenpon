@@ -1,18 +1,8 @@
 
-const radios = document.querySelectorAll('button[name="player-choice"]');
+const playerChoiceBtn = document.querySelectorAll('button[name="player-choice"]');
 let playersChoice = '';
-let botsChoice = ''
 
-radios.forEach(radio => {
-  document.getElementById(radio.id)
-    .addEventListener('click', function () {
-      botsChoice = randomBotChoice().toLowerCase();
-      setMessage('.js-bot-field', botsChoice);
-      setMessage('.js-game-results', thisBeatsThat(radio.value, botsChoice) + ' wins!');
-    });
-});
-
-const setMessage = (classname, val) => {
+const setMessage = (classname, texts) => {
   const elem = document.querySelector(classname);
 
   if (elem.hasChildNodes()) {
@@ -20,9 +10,19 @@ const setMessage = (classname, val) => {
   }
 
   const node = document.createElement('div');
-  const textNode = document.createTextNode(val);
+  const textNode = document.createTextNode(texts);
   node.appendChild(textNode);
   elem.appendChild(node);
+}
+
+const setBotChoiceHTML = (botChoice) => {
+  let pictureHtml = '<picture>';
+  pictureHtml += `<source media="(min-width: 768px)" srcset="assets/img/bothand/hand-${botChoice}@2x.png">`;
+  pictureHtml += `<img src="assets/img/bothand/hand-${botChoice}.png" alt="Rock" width="200" height="200" style="width:auto;">`;
+  pictureHtml += `</picture>`;
+
+  let textHtml = `<div class="bot-result">${botChoice}</div>`
+  document.querySelector('.js-bot-field').innerHTML = textHtml + pictureHtml;
 }
 
 const randomBotChoice = () => {
@@ -51,4 +51,17 @@ const thisBeatsThat = (playerChoice, botChoice) => {
     console.log(`${botChoice} wins`);
     return players[1];
   }
+}
+
+function onload () {
+  playerChoiceBtn.forEach(btn => {
+    document.getElementById(btn.id)
+      .addEventListener('click', function () {
+        let botsChoice = randomBotChoice().toLowerCase();;
+        let gameResult = thisBeatsThat(btn.value, botsChoice);
+
+        setBotChoiceHTML(botsChoice);
+        setMessage('.js-game-results', gameResult + ' wins!');
+      });
+  });
 }
