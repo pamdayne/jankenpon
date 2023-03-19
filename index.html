@@ -4,23 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="asset/styles/reset.css">
-    <link rel="stylesheet" href="asset/styles/style.css">
+    <link rel="stylesheet" href="assets/styles/reset.css">
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
     <title>JanKenPon</title>
   </head>
-  <body>
+  <body onload="onload();">
     <section class="title">
       <h1>JanKenPon</h1>
     </section>
     <section class="game-area">
-      <div class="bot-field js-bot-field"></div>
-      <div class="player-field js-player-field">
-        <button type="radio" name="player-choice" id="rock" value="rock">Rock</button>
-        <button type="radio" name="player-choice" id="paper" value="paper">Paper</button>
-        <button type="radio" name="player-choice" id="scissors" value="scissors">Scissors</button>
+      <div class="bot-field js-bot-field">
+        <div class="bot-result">waiting</div>
+        <picture>
+          <source media="(min-width: 768px)" srcset="assets/img/waiting@2x.png">
+          <img src="assets/img/waiting.png" alt="Rock" width="200" height="200" style="width:auto;">
+        </picture>
       </div>
-    </section>
-    <section class="game-results js-game-results">
+      <div class="game-results js-game-results"></div>
+      <div class="player-field js-player-field">
+        <button type="button" name="player-choice" id="rock" value="rock">
+          <picture>
+            <source media="(min-width: 768px)" srcset="assets/img/hand/hand-rock@2x.png">
+            <img src="assets/img/hand/hand-rock.png" alt="Rock" width="150" height="150" style="width:auto;">
+          </picture>
+        </button>
+        <button type="button" name="player-choice" id="paper" value="paper">
+          <picture>
+            <source media="(min-width: 768px)" srcset="assets/img/hand/hand-paper@2x.png">
+            <img src="assets/img/hand/hand-paper.png" alt="paper" width="150" height="150" style="width:auto;">
+          </picture>
+        </button>
+        <button type="button" name="player-choice" id="scissors" value="scissors">
+          <picture>
+            <source media="(min-width: 768px)" srcset="assets/img/hand/hand-scissors@2x.png">
+            <img src="assets/img/hand/hand-scissors.png" alt="scissors" width="150" height="150" style="width:auto;">
+          </picture>
+        </button>
+      </div>
     </section>
     <script defer src="assets/js/script.js"></script>
   </body>
