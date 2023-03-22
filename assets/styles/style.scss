@@ -1,5 +1,6 @@
 :root {
   --fs-base: 10px;
+  --border-radius: 2rem;
   --border-radius-sm: 1rem;
   --ff-title: 'Titan One', cursive;
   --ff-primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,17 +12,18 @@
   --color-white: #ffffff;
   --color-grey: #dddddd;
   --color-grey-light: #ebebeb;
-  --game-area-w: 10rem;
-  --game-area-h: 10rem;
+  --game-area-w: 39rem;
+  --game-area-w-max: 48rem;
+  --game-area-h: 84.4rem;
 }
 
 html {
   font-size: var(--fs-base);
   font-family: var(--ff-primary-font);
+  color-scheme: dark light;
 }
 
 body {
-  background-color: var(--color-white);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,45 +35,104 @@ h1 {
 }
 
 .game-area {
+  border-radius: var(--border-radius);
+  background: linear-gradient(
+    to bottom,
+    var(--color-secondary),
+    var(--color-white)
+  );
   display: flex;
   flex-direction: column;
-  margin-top: 3rem;
   gap: 3rem;
-}
+  margin: 3rem auto 0;
+  max-width: var(--game-area);
+  height: var(--game-area-h);
+  padding: 5rem 0 0 0;
 
-.player-field {
-  display: flex;
-  gap: 2rem;
-
-  button {
-    // background-color: transparent;
+  .bot-field {
     font-size: 1.8rem;
-    padding: 1rem;
-    border-width: 0;
-    border-radius: var(--border-radius-sm);
-    background-color: var(--color-white);
+    display: flex;
+    place-items: center;
+    flex-direction: column;
 
-    &:hover {
-      background-color: var(--color-grey);
+    picture {
+      z-index: 2;
+    }
+
+    img {
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 2rem;
+      width: auto;
+    }
+
+    .bot-choice {
+      color: var(--color-white);
+      transform: translateY(-2rem);
     }
   }
-}
 
-.bot-field {
-  font-size: 1.8rem;
-  display: flex;
-  place-items: center;
-  flex-direction: column;
+  .player-field {
+    position: relative;
 
-  img {
-    margin: 0 auto;
-    padding: 2rem;
-    border-radius: 2rem;
+    .player-choice {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(4rem);
+      color: var(--color-accent);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      button {
+        background-color: transparent;
+        font-size: 1.8rem;
+        padding: 1rem;
+        border-width: 0;
+        border-radius: var(--border-radius-sm);
+        transition: transform 0.2s ease;
+        z-index: 2;
+
+        &:hover {
+          transform: scale(1.1) rotate(20deg);
+        }
+
+        &[disabled] {
+          background-color: transparent;
+
+          &:not(.chosen) {
+            opacity: 0.3;
+          }
+        }
+      }
+    }
   }
-}
 
+  .player-choice,
+  .bot-choice {
+    color: var(--color-white);
+    font-family: var(--ff-title);
+    font-size: 8rem;
+    opacity: 0.9;
+    position: absolute;
+    z-index: 1;
+  }
 
-.game-results {
-  font-size: 2rem;
-  text-align: center;
+  .game-results {
+    display: flex;
+    font-size: 2rem;
+    flex-wrap: nowrap;
+    justify-content: center;
+    min-height: 5rem;
+    text-align: center;
+
+    .name {
+      font-weight: bold;
+    }
+  }
 }
