@@ -1,67 +1,87 @@
+const playerChoiceBtn = document.querySelectorAll(
+  'button[name="player-choice"]'
+);
+const handShapes = ['rock', 'paper', 'scissors'];
 
-const playerChoiceBtn = document.querySelectorAll('button[name="player-choice"]');
-let playersChoice = '';
-
-const setMessage = (classname, texts) => {
+const setResultMessage = (classname, results) => {
   const elem = document.querySelector(classname);
 
   if (elem.hasChildNodes()) {
     elem.removeChild(elem.childNodes[0]);
   }
 
+  // parent results message
   const node = document.createElement('div');
-  const textNode = document.createTextNode(texts);
-  node.appendChild(textNode);
+  node.classList.add('results-message');
+
+  // add span around the winners name
+  const spanNode = document.createElement('span');
+  const textNode = document.createTextNode(results);
+  spanNode.classList.add('name');
+  spanNode.appendChild(textNode);
+
+  // combine
+  node.appendChild(spanNode);
+  node.append(document.createTextNode(' wins!'));
   elem.appendChild(node);
-}
+};
 
-const setBotChoiceHTML = (botChoice) => {
-  let pictureHtml = '<picture>';
-  pictureHtml += `<source media="(min-width: 768px)" srcset="assets/img/bothand/hand-${botChoice}@2x.png">`;
-  pictureHtml += `<img src="assets/img/bothand/hand-${botChoice}.png" alt="Rock" width="200" height="200" style="width:auto;">`;
-  pictureHtml += `</picture>`;
+const setPlayerChoice = (playerChoice) => {
+  document
+    .querySelector(`button[value=${playerChoice}]`)
+    .classList.add('chosen');
+  handShapes.forEach((item) => {
+    document.querySelector(`button[value=${item}]`).disabled = 'true';
+  });
 
-  let textHtml = `<div class="bot-result">${botChoice}</div>`
+  let html = `<div class="player-choice">${playerChoice}</div>`;
+  let elem = document.querySelector('.player-field .buttons');
+  elem.insertAdjacentHTML('afterend', html);
+};
+
+const setBotChoice = (botChoice) => {
+  let pictureHtml = `<picture> 
+                     <source media="(min-width: 768px)" srcset="assets/img/bothand/hand-${botChoice}@2x.png">
+                     <img src="assets/img/bothand/hand-${botChoice}.png" alt="Rock" width="200" height="200" style="width:auto;">
+                     </picture>`;
+
+  let textHtml = `<div class="bot-choice">${botChoice}</div>`;
   document.querySelector('.js-bot-field').innerHTML = textHtml + pictureHtml;
-}
+};
 
 const randomBotChoice = () => {
-  const handShapes = ['Rock', 'Paper', 'Scissors'];
   const chosenShape = handShapes[Math.floor(Math.random() * handShapes.length)];
   return chosenShape;
-}
+};
 
 const thisBeatsThat = (playerChoice, botChoice) => {
-  console.log(`Player: ${playerChoice} vs Bot: ${botChoice}`)
   const players = ['Player', 'Bot'];
 
   if (playerChoice === botChoice) {
-    console.log(`draw`);
     return 'No one ';
   } else if (playerChoice === 'paper' && botChoice === 'rock') {
-    console.log(`${playerChoice} wins`);
     return players[0];
   } else if (playerChoice === 'rock' && botChoice === 'scissors') {
-    console.log(`${playerChoice} wins`);
     return players[0];
   } else if (playerChoice === 'scissors' && botChoice === 'paper') {
-    console.log(`${playerChoice} wins`);
     return players[0];
   } else {
-    console.log(`${botChoice} wins`);
     return players[1];
   }
-}
+};
 
-function onload () {
-  playerChoiceBtn.forEach(btn => {
-    document.getElementById(btn.id)
-      .addEventListener('click', function () {
-        let botsChoice = randomBotChoice().toLowerCase();;
-        let gameResult = thisBeatsThat(btn.value, botsChoice);
+function onload() {
+  playerChoiceBtn.forEach((btn) => {
+    let btnID = document.getElementById(btn.id);
 
-        setBotChoiceHTML(botsChoice);
-        setMessage('.js-game-results', gameResult + ' wins!');
-      });
+    btnID.addEventListener('click', function () {
+      let playerChoice = btnID.value;
+      let botsChoice = randomBotChoice();
+      let gameResult = thisBeatsThat(playerChoice, botsChoice);
+
+      setPlayerChoice(playerChoice);
+      setBotChoice(botsChoice);
+      setResultMessage('.js-game-results', gameResult);
+    });
   });
 }
