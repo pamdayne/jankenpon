@@ -1,51 +1,33 @@
-const playerChoiceBtn = document.querySelectorAll(
-  'button[name="player-choice"]'
-);
+const playerChoiceBtn = document.querySelectorAll('button[name="player-choice"]');
 const handShapes = ['rock', 'paper', 'scissors'];
+const players = ['Player', 'Bot'];
+const gameResultElem = document.querySelector('.js-game-results');
 
-const setResultMessage = (classname, results) => {
-  const elem = document.querySelector(classname);
-
-  if (elem.hasChildNodes()) {
-    elem.removeChild(elem.childNodes[0]);
-  }
-
-  // parent results message
-  const node = document.createElement('div');
-  node.classList.add('results-message');
-
-  // add span around the winners name
-  const spanNode = document.createElement('span');
-  const textNode = document.createTextNode(results);
-  spanNode.classList.add('name');
-  spanNode.appendChild(textNode);
-
-  // combine
-  node.appendChild(spanNode);
-  node.append(document.createTextNode(' wins!'));
-  elem.appendChild(node);
+const setResultMessage = (results) => {
+  const winner = (results === 'No one' ? results : `<span class="name">${results}</span>`);
+  gameResultElem.innerHTML = `<div class="result-message">${winner} wins!</div>`;
 };
 
 const setPlayerChoice = (playerChoice) => {
-  document
-    .querySelector(`button[value=${playerChoice}]`)
-    .classList.add('chosen');
-  handShapes.forEach((item) => {
-    document.querySelector(`button[value=${item}]`).disabled = 'true';
+  const button = document.querySelector(`button[value=${playerChoice}]`);
+  button.classList.add('chosen');
+  handShapes.forEach((shape) => {
+    const otherButtons = document.querySelector(`button[value=${shape}]`);
+    otherButtons.disabled = 'true';
   });
 
-  let html = `<div class="player-choice">${playerChoice}</div>`;
-  let elem = document.querySelector('.player-field .buttons');
+  const html = `<div class="player-choice">${playerChoice}</div>`;
+  const elem = document.querySelector('.player-field .buttons');
   elem.insertAdjacentHTML('afterend', html);
 };
 
 const setBotChoice = (botChoice) => {
-  let pictureHtml = `<picture> 
+  const pictureHtml = `<picture> 
                      <source media="(min-width: 768px)" srcset="assets/img/bothand/hand-${botChoice}@2x.png">
                      <img src="assets/img/bothand/hand-${botChoice}.png" alt="Rock" width="200" height="200" style="width:auto;">
                      </picture>`;
 
-  let textHtml = `<div class="bot-choice">${botChoice}</div>`;
+  const textHtml = `<div class="bot-choice">${botChoice}</div>`;
   document.querySelector('.js-bot-field').innerHTML = textHtml + pictureHtml;
 };
 
@@ -55,8 +37,6 @@ const randomBotChoice = () => {
 };
 
 const thisBeatsThat = (playerChoice, botChoice) => {
-  const players = ['Player', 'Bot'];
-
   if (playerChoice === botChoice) {
     return 'No one ';
   } else if (playerChoice === 'paper' && botChoice === 'rock') {
@@ -72,16 +52,16 @@ const thisBeatsThat = (playerChoice, botChoice) => {
 
 function onload() {
   playerChoiceBtn.forEach((btn) => {
-    let btnID = document.getElementById(btn.id);
+    const btnID = document.getElementById(btn.id);
 
     btnID.addEventListener('click', function () {
-      let playerChoice = btnID.value;
-      let botsChoice = randomBotChoice();
-      let gameResult = thisBeatsThat(playerChoice, botsChoice);
+      const playerChoice = btnID.value;
+      const botsChoice = randomBotChoice();
+      const gameResult = thisBeatsThat(playerChoice, botsChoice);
 
       setPlayerChoice(playerChoice);
       setBotChoice(botsChoice);
-      setResultMessage('.js-game-results', gameResult);
+      setResultMessage(gameResult);
     });
   });
 }
