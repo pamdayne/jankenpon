@@ -1,30 +1,28 @@
 :root {
   --fs-base: 10px;
+  --border-radius: 2rem;
   --border-radius-sm: 1rem;
   --ff-title: "Titan One", cursive;
   --ff-primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   --color-primary: #fcd1d1;
   --color-primary-light: #ece2e1;
-  --color-secondary: #aee1e1;
-  --color-secondary-light: #d3e0dc;
-  --color-accent: #97cfcf;
+  --color-secondary: #333;
+  --color-accent: purple;
   --color-white: #ffffff;
-  --color-grey: #dddddd;
-  --color-grey-light: #ebebeb;
-  --game-area-w: 10rem;
-  --game-area-h: 10rem;
+  --game-area-h: 90vh;
 }
 
 html {
   font-size: var(--fs-base);
   font-family: var(--ff-primary-font);
+  color-scheme: dark light;
 }
 
 body {
-  background-color: var(--color-white);
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: linear-gradient(to top, var(--color-accent), 1rem, var(--color-secondary));
 }
 
 h1 {
@@ -35,38 +33,81 @@ h1 {
 .game-area {
   display: flex;
   flex-direction: column;
-  margin-top: 3rem;
   gap: 3rem;
+  margin: 3rem auto 0;
+  height: var(--game-area-h);
+  padding: 5rem 0 0 0;
 }
-
-.player-field {
-  display: flex;
-  gap: 2rem;
-}
-.player-field button {
-  font-size: 1.8rem;
-  padding: 1rem;
-  border-width: 0;
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-white);
-}
-.player-field button:hover {
-  background-color: var(--color-grey);
-}
-
-.bot-field {
+.game-area .bot-field {
   font-size: 1.8rem;
   display: flex;
   place-items: center;
   flex-direction: column;
 }
-.bot-field img {
+.game-area .bot-field picture {
+  z-index: 2;
+}
+.game-area .bot-field img {
   margin: 0 auto;
   padding: 2rem;
   border-radius: 2rem;
+  width: auto;
 }
-
-.game-results {
+.game-area .bot-field .bot-choice {
+  color: var(--color-white);
+  transform: translateY(-2rem);
+}
+.game-area .player-field {
+  position: relative;
+}
+.game-area .player-field .player-choice {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(4rem);
+  color: var(--color-accent);
+}
+.game-area .player-field .buttons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.game-area .player-field .buttons button {
+  background-color: transparent;
+  font-size: 1.8rem;
+  padding: 1rem;
+  border-width: 0;
+  border-radius: var(--border-radius-sm);
+  transition: transform 0.2s ease;
+  z-index: 2;
+}
+.game-area .player-field .buttons button:hover {
+  transform: scale(1.1) rotate(20deg);
+}
+.game-area .player-field .buttons button[disabled] {
+  background-color: transparent;
+}
+.game-area .player-field .buttons button[disabled]:not(.chosen) {
+  opacity: 0.3;
+}
+.game-area .player-choice,
+.game-area .bot-choice {
+  color: var(--color-white);
+  font-family: var(--ff-title);
+  font-size: 8rem;
+  opacity: 0.9;
+  position: absolute;
+  z-index: 1;
+}
+.game-area .game-results {
+  display: flex;
   font-size: 2rem;
+  flex-wrap: nowrap;
+  justify-content: center;
+  min-height: 5rem;
   text-align: center;
+}
+.game-area .game-results .name {
+  font-weight: bold;
 }/*# sourceMappingURL=style.css.map */
